@@ -5,6 +5,19 @@ for my practices which focus on:
 * Kubernetes(K8s)
 * Docker
 
+# Project Features
+
+* ### Main Functions & APIs:
+  1. Cat gathering sites at Taipei City(use u-bike sites currently at dev phase)
+     * Google maps API
+     * Redis Cache
+     * Spring webflux
+  2. Daily most visited spots ranking function
+     * Redis 
+  4. Chat Room function
+     * Web-Socket
+     * Spring webflux.
+
 # Getting Started
 
 * ###  using k8s(local)
@@ -55,16 +68,3 @@ for my practices which focus on:
      ```
      docker compose up
      ```
-
-# Project Features
-
-* ### Main Functions & APIs:
-  1. Cat gathering sites at Taipei City(use u-bike sites currently at dev phase)
-     * Google maps API
-     * Redis Cache
-     * Spring webflux
-  2. Daily most visited spots ranking function
-     * Redis 
-  4. Chat Room function
-     * Web-Socket
-     * Spring webflux.
