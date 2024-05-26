@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-app
+spec:
+  selector:
+    matchLabels:
+      app: core-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: core-app
+    spec:
+      containers:
+      - name: job
+        image: stevenzchao/local-cat-finding-system-core
+        ports:
+        - containerPort: 8080  
+        env:
+        - name: "spring.r2dbc.url"
+          value: "r2dbc:mysql://mysql-cat:3306/catFindingSystem"
+        - name: "spring.r2dbc.username"
+          value: "root"
+        - name: "spring.redisson.address"
+          value: "redis://redis-reactive-service:6379"
+        # startupProbe:
+        #   httpGet:
+        #     path: /health
+        #     port: 8080
+        #   periodSeconds: 1
+        #   failureThreshold: 30                
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 2000m
+            memory: 2000Mi  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: core-app
+  labels:
+    app: core-app
+spec:
+  selector:
+    app: core-app
+  ports:
+    - port: 80
+      targetPort: 8080
+      # nodePort: 31234

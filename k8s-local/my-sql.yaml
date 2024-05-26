@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-db
+spec:
+  serviceName: mysql-cat
+  selector:
+    matchLabels:
+      app: mysql-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql-db
+    spec:
+      containers:
+      - name: mysql-db
+        image: mysql
+        ports:
+        - containerPort: 3306 
+        env:
+        - name: "MYSQL_DATABASE"
+          value: "catFindingSystem"
+        - name: "MYSQL_ALLOW_EMPTY_PASSWORD"
+          value: "yes" 
+        volumeMounts:
+        - name: mysql-pvc
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-pvc
+    spec:
+      storageClassName: standard
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1G                    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-cat
+spec:
+  clusterIP: None
+  selector:
+    app: mysql-db
+  ports:
+  - port: 3306
+    targetPort: 3306

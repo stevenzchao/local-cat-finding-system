@@ -1,0 +1,31 @@
+version: "3.0"
+services:
+  redis:
+    image: redis:6.2
+    hostname: redis
+    ports:
+    - 6379:6379
+  mysql:
+    image: mysql
+    hostname: mysql
+    restart: always
+    ports:
+    - "3307:3306"
+    environment:
+      MYSQL_DATABASE: catFindingSystem
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    volumes:
+    - ./data:/docker-entrypoint-initdb.d
+  local-cat-finding-system-core:
+    depends_on:
+    - redis
+    - mysql
+    build: .
+    image: stevenzchao/local-cat-finding-system-core
+    ports:
+      - "8080:8080"
+    profiles:
+      - app
+    environment:
+      spring.redisson.address: "redis://redis:6379"
+      spring.r2dbc.url: "r2dbc:mysql://mysql:3306/catFindingSystem"

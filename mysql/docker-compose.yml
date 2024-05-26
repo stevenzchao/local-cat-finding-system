@@ -1,0 +1,16 @@
+version: "3.0"
+services:
+  mysql:
+    image: mysql
+    restart: always
+    ports:
+    - "3307:3306"
+    environment:
+      MYSQL_DATABASE: catFindingSystem
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    volumes:
+    - ./data:/docker-entrypoint-initdb.d
+  adminer:
+    image: adminer
+    ports:
+    - "7070:7070"
