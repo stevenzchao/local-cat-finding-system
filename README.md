@@ -1,4 +1,4 @@
-# Demo Project focus on Redis, Spring WebFlux, (K8s), Docker
+# Demo Project focus on Redis, Spring WebFlux, K8s, Docker
 
 # Project Features
 
